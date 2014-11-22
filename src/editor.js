@@ -12,6 +12,10 @@ JSONEditor.AbstractEditor = Class.extend({
     if(this.parent) this.parent.onChildEditorChange(this);
     else this.jsoneditor.onChange();
   },
+  onTabClick: function(params) {
+    if(this.parent) this.parent.onTabClick(params);
+    else this.jsoneditor.onTabClick(params);
+  },
   onChange: function(bubble) {
     this.notify();
     if(this.watch_listener) this.watch_listener();
@@ -31,6 +35,7 @@ JSONEditor.AbstractEditor = Class.extend({
   init: function(options) {
     this.jsoneditor = options.jsoneditor;
     
+    this.layout = this.jsoneditor.layout;
     this.theme = this.jsoneditor.theme;
     this.template_engine = this.jsoneditor.template;
     this.iconlib = this.jsoneditor.iconlib;

@@ -385,10 +385,17 @@ JSONEditor.defaults.editors.object = JSONEditor.AbstractEditor.extend({
       this.title.appendChild(this.editjson_controls);
       this.title.appendChild(this.addproperty_controls);
 
+      //Add CSS class for styling
+      this.title_controls.className += ' title-controls';
+      
       // Show/Hide button
       this.collapsed = false;
       this.toggle_button = this.getButton('','collapse','Collapse');
-      this.title_controls.appendChild(this.toggle_button);
+      if (this.layout == "tree") {
+        this.title.insertBefore(this.toggle_button, this.title.firstChild);
+      } else {
+        this.title_controls.appendChild(this.toggle_button);
+      }
       this.toggle_button.addEventListener('click',function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -442,8 +449,13 @@ JSONEditor.defaults.editors.object = JSONEditor.AbstractEditor.extend({
         e.stopPropagation();
         self.toggleAddProperty();
       });
-      this.addproperty_controls.appendChild(this.addproperty_button);
-      this.addproperty_controls.appendChild(this.addproperty_holder);
+      if (this.layout == "tree") {
+        this.title_controls.insertBefore(this.addproperty_button, this.title_controls.firstChild);
+        this.title_controls.insertBefore(this.addproperty_holder, this.title_controls.firstChild);
+      } else {
+        this.addproperty_controls.appendChild(this.addproperty_button);
+        this.addproperty_controls.appendChild(this.addproperty_holder);
+      }
       this.refreshAddProperties();
     }
     

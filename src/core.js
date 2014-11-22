@@ -13,6 +13,7 @@ JSONEditor.prototype = {
     var theme_class = JSONEditor.defaults.themes[this.options.theme || JSONEditor.defaults.theme];
     if(!theme_class) throw "Unknown theme " + (this.options.theme || JSONEditor.defaults.theme);
     
+    this.layout = this.options.layout;
     this.schema = this.options.schema;
     this.theme = new theme_class();
     this.template = this.options.template;
@@ -137,10 +138,10 @@ JSONEditor.prototype = {
     
     return this;
   },
-  trigger: function(event) {
+  trigger: function(event, params) {
     if(this.callbacks && this.callbacks[event] && this.callbacks[event].length) {
       for(var i=0; i<this.callbacks[event].length; i++) {
-        this.callbacks[event][i]();
+        this.callbacks[event][i](params);
       }
     }
     
@@ -181,6 +182,12 @@ JSONEditor.prototype = {
   createEditor: function(editor_class, options) {
     options = $extend({},editor_class.options||{},options);
     return new editor_class(options);
+  },
+  onTabClick: function(params) {
+    if(!this.ready) return;
+    // Fire tab click event
+    self.trigger('tabclick', params);
+    return this;
   },
   onChange: function() {
     if(!this.ready) return;

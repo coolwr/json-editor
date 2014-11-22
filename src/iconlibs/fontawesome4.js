@@ -1,14 +1,14 @@
 JSONEditor.defaults.iconlibs.fontawesome4 = JSONEditor.AbstractIconLib.extend({
   mapping: {
-    collapse: 'caret-square-o-down',
-    expand: 'caret-square-o-right',
+    collapse: 'caret-down',
+    expand: 'caret-right',
     delete: 'times',
     edit: 'pencil',
     add: 'plus',
     cancel: 'ban',
     save: 'save',
-    moveup: 'arrow-up',
-    movedown: 'arrow-down'
+    moveup: 'chevron-up',
+    movedown: 'chevron-down'
   },
   icon_prefix: 'fa fa-'
 });
