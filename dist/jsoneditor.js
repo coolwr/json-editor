@@ -3577,6 +3577,7 @@ JSONEditor.defaults.editors.array = JSONEditor.AbstractEditor.extend({
         self.refreshTabs();
 
         self.onChange(true);
+        self.jsoneditor.trigger("moveup", {index: i-1, row: self.rows[i-1]});
       });
       
       if(controls_holder) {
@@ -3603,6 +3604,7 @@ JSONEditor.defaults.editors.array = JSONEditor.AbstractEditor.extend({
         self.active_tab = self.rows[i+1].tab;
         self.refreshTabs();
         self.onChange(true);
+        self.jsoneditor.trigger("movedown", {index: i+1, row: self.rows[i+1]});
       });
       
       if(controls_holder) {
@@ -3679,6 +3681,11 @@ JSONEditor.defaults.editors.array = JSONEditor.AbstractEditor.extend({
       self.refreshTabs();
       self.refreshValue();
       self.onChange(true);
+      if (self.schema.format == "tabs") {
+    	  //Fire tabclick even when creating a new tab
+          self.jsoneditor.trigger("tabclick", {index: i, tab: self.active_tab});
+      }
+      
     });
     self.controls.className += " array-controls";
     self.controls.appendChild(this.add_row_button);
@@ -4912,8 +4919,6 @@ JSONEditor.defaults.editors.select = JSONEditor.AbstractEditor.extend({
       }
       
       // If the previous value is still in the new select options, stick with it
-//      console.log("prev_value = " + prev_value);
-//      console.log("select_options.indexOf(prev_value) = " + select_options.indexOf(prev_value));
       if(select_options.indexOf(prev_value) !== -1) {
         this.input.value = prev_value;
         this.value = prev_value;
